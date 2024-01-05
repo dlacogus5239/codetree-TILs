@@ -236,7 +236,10 @@ public class Main {
 		// 포인트 획득은 위에서 처리
 		// 총 획득
 		if (Players[winner].weapon == 0) {
-			Players[winner].weapon = mapWeapon[r][c].poll();
+			if(mapWeapon[r][c].size() != 0) {
+				
+				Players[winner].weapon = mapWeapon[r][c].poll();
+			}
 		} else {
 			mapWeapon[r][c].offer(Players[winner].weapon);
 			Players[winner].weapon = mapWeapon[r][c].poll();
