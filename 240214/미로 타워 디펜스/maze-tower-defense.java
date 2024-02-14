@@ -59,7 +59,6 @@ public class Main {
 	}
 
 	public static void RemoveMonster() {
-
 		// STACK MONSTER START
 		Stack<Integer> stack = new Stack<>();
 		// 마지막 넣기 전 Queue
@@ -105,7 +104,7 @@ public class Main {
 		}
 
 		// STACK MONSTER END
-
+		map = new int[N][N];
 		if (stack.isEmpty()) {
 			return;
 		}
@@ -134,6 +133,11 @@ public class Main {
 			}
 		}
 
+		if (dq.size() == 1) {
+			map[C][C - 1] = 1;
+			map[C + 1][C - 1] = dq.pollFirst();
+		}
+
 		// Step 3. Generate new Monster Array
 		Deque<Integer> nDq = new ArrayDeque<Integer>();
 		// 숫자 짝지을때
@@ -143,7 +147,7 @@ public class Main {
 		int pre = dq.pollFirst();
 		int cur = dq.pollFirst();
 
-		while (!dq.isEmpty()) {
+		do {
 			if (pre == cur) {
 				cnt++;
 				cur = dq.pollFirst();
@@ -170,11 +174,11 @@ public class Main {
 				}
 			}
 
-		}
+		} while (!dq.isEmpty());
 
 		// Step 4 : MONSTER INPUT START
 		// Deque pollFirst --> 중앙에서부터 차례대로 INPUT
-		map = new int[N][N];
+
 		r = C;
 		c = C;
 		totalMove = 1;
