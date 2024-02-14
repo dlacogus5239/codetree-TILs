@@ -106,6 +106,10 @@ public class Main {
 
 		// STACK MONSTER END
 
+		if (stack.isEmpty()) {
+			return;
+		}
+
 		// 4개 이상 중복 제거
 		int cnt = 1;
 		dq.offer(stack.pop());
@@ -197,13 +201,7 @@ public class Main {
 				totalMove++;
 			}
 		}
-//
-//		for (int i = 0; i < N; i++) {
-//			for (int j = 0; j < N; j++) {
-//				System.out.print(map[i][j] + " ");
-//			}
-//			System.out.println();
-//		}
+
 	}
 
 	// 격자 안인지 판단
