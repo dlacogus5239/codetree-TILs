@@ -169,6 +169,8 @@ public class Main {
 						nDq.offer(cur);
 					}
 					break;
+				} else if (dq.isEmpty()) {
+					break;
 				} else {
 					cur = dq.pollFirst();
 				}
