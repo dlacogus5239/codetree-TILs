@@ -127,9 +127,9 @@ public class Main {
 				if (!dq.isEmpty()) {
 					if (dq.getLast() == tmp) {
 						cnt = 2;
-					} else {
-						cnt = 1;
 					}
+				} else {
+					cnt = 1;
 				}
 				dq.offer(tmp);
 			}
