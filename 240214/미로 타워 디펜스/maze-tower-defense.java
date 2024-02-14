@@ -124,10 +124,9 @@ public class Main {
 						Score += dq.pollLast();
 					}
 				}
-				if (!dq.isEmpty()) {
-					if (dq.getLast() == tmp) {
-						cnt = 2;
-					}
+
+				if (dq.getLast() == tmp) {
+					cnt = 2;
 				} else {
 					cnt = 1;
 				}
