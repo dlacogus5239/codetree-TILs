@@ -53,6 +53,14 @@ public class Main {
 			// Step 2. Monster Remove
 			RemoveMonster();
 
+//			System.out.println("===ROUND " + (i + 1) + "===");
+//			for (int j = 0; j < N; j++) {
+//				for (int j2 = 0; j2 < N; j2++) {
+//					System.out.print(map[j][j2] + " ");
+//				}
+//				System.out.println();
+//			}
+
 		}
 		// ROUND END
 		System.out.println(Score);
@@ -151,38 +159,34 @@ public class Main {
 		cnt = 1;
 		// 해당 숫자
 		int pre = dq.pollFirst();
-		int cur = dq.pollFirst();
+		int cur;
 
-		do {
-			if (pre == cur) {
-				cnt++;
-				cur = dq.pollFirst();
-				continue;
-			} else {
+		while (!dq.isEmpty()) {
+			cur = dq.pollFirst();
+			if (pre != cur) {
 				nDq.offer(cnt);
 				nDq.offer(pre);
-				cnt = 1;
 				pre = cur;
-				if (dq.size() == 1) {
-					cur = dq.pollFirst();
-					if (cur == pre) {
-						nDq.offer(cnt + 1);
-						nDq.offer(cur);
-					} else {
-						nDq.offer(cnt);
-						nDq.offer(pre);
-						nDq.offer(1);
-						nDq.offer(cur);
-					}
-					break;
-				} else if (dq.isEmpty()) {
-					break;
-				} else {
-					cur = dq.pollFirst();
+				cnt = 1;
+				if (dq.isEmpty()) {
+					nDq.offer(cnt);
+					nDq.offer(pre);
 				}
+
+				continue;
+			} else {
+				cnt++;
+				if (dq.isEmpty()) {
+					nDq.offer(cnt);
+					nDq.offer(pre);
+				} else {
+					pre = cur;
+				}
+
 			}
 
-		} while (!dq.isEmpty());
+		}
+//		System.out.println(nDq.toString());
 
 		// Step 4 : MONSTER INPUT START
 		// Deque pollFirst --> 중앙에서부터 차례대로 INPUT
