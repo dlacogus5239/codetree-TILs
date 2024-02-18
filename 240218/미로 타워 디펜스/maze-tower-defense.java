@@ -120,11 +120,19 @@ public class Main {
 		// 4개 이상 중복 제거
 		int cnt = 1;
 		dq.offer(stack.pop());
-		while (!stack.isEmpty()) {
+		do {
 			int tmp = stack.pop();
 			if (dq.getLast() == tmp) {
 				dq.offer(tmp);
 				cnt += 1;
+				if (stack.isEmpty()) {
+					if (cnt >= 4) {
+						// Step 2-1. Calculate Score
+						for (int i = 0; i < cnt; i++) {
+							Score += dq.pollLast();
+						}
+					}
+				}
 			} else {
 				if (cnt >= 4) {
 					// Step 2-1. Calculate Score
@@ -145,7 +153,8 @@ public class Main {
 				}
 				dq.offer(tmp);
 			}
-		}
+		} while (!stack.isEmpty());
+//		System.out.println(dq.toString());
 
 		if (dq.size() == 1) {
 			map[C][C - 1] = 1;
