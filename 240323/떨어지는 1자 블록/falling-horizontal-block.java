@@ -12,6 +12,10 @@ public class Main {
 		int start = Integer.parseInt(st.nextToken()) - 1;
 
 		int[][] map = new int[N][N];
+		if (N == 1) {
+			System.out.println(1);
+			return;
+		}
 
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
