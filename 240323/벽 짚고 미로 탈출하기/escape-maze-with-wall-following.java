@@ -57,7 +57,7 @@ public class Main {
 					}
 				}
 
-				if (change == 3) {
+				if (change == 4) {
 					time = -1;
 					break loop;
 				}
