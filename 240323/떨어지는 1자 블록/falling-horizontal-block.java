@@ -12,10 +12,6 @@ public class Main {
 		int start = Integer.parseInt(st.nextToken()) - 1;
 
 		int[][] map = new int[N][N];
-		if (N == 1) {
-			System.out.println(1);
-			return;
-		}
 
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -24,7 +20,8 @@ public class Main {
 			}
 		}
 
-		Drop: for (int i = 0; i < N; i++) {
+		int i = 0;
+		Drop: for (i = 0; i < N - 1; i++) {
 			for (int j = start; j < start + width; j++) {
 				if (map[i][j] != 0) {
 					for (int k = start; k < start + width; k++) {
@@ -36,7 +33,13 @@ public class Main {
 			}
 		}
 
-		for (int i = 0; i < N; i++) {
+		if (i == N - 1) {
+			for (int k = start; k < start + width; k++) {
+				map[i][k] = 1;
+			}
+		}
+
+		for (i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				System.out.print(map[i][j] + " ");
 			}
