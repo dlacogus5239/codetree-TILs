@@ -10,6 +10,7 @@ public class Main {
 	static int[] dr = { 0, 1, 0, -1 };
 	static int[] dc = { 1, 0, -1, 0 };
 	static int r, c;
+	static int sR, sC;
 	static int dir = 0;
 
 	static final int INF = 10_001;
@@ -20,6 +21,8 @@ public class Main {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		r = Integer.parseInt(st.nextToken()) - 1;
 		c = Integer.parseInt(st.nextToken()) - 1;
+		sR = r;
+		sC = c;
 		map = new char[N][N];
 		for (int i = 0; i < N; i++) {
 			map[i] = br.readLine().toCharArray();
@@ -61,7 +64,7 @@ public class Main {
 				}
 			}
 
-			if (time >= INF) {
+			if ((r == sR && c == sC) || time >= INF) {
 				time = -1;
 				break;
 			}
