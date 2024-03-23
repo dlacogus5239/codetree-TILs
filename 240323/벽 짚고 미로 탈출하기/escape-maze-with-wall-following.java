@@ -32,7 +32,8 @@ public class Main {
 
 	public static void Move() {
 		int time = 0;
-		while (true) {
+		boolean flag = true;
+		loop: while (true) {
 //			System.out.println("[" + r + ", " + c + "]");
 
 			int nr = r + dr[dir];
@@ -43,7 +44,22 @@ public class Main {
 			}
 
 			if (map[nr][nc] == '#') { // 벽인 경우
-				dir = (dir + 3) % 4; // 반시계방향으로 TURN
+				int change = 1;
+				for (change = 1; change <= 3; change++) {
+					dir = (dir + 1) % 4;
+					nr = r + dr[dir];
+					nc = c + dc[dir];
+					if (!isIn(nr, nc) || map[nr][nc] == '#') {
+						continue;
+					} else if (map[nr][nc] == '.') {
+						break;
+					}
+				}
+
+				if (change == 3) {
+					time = -1;
+					break loop;
+				}
 				continue;
 			} else if (map[nr][nc] == '.') { // 빈공간인경우
 				// 오른쪽 검사
@@ -64,7 +80,7 @@ public class Main {
 				}
 			}
 
-			if ((r == sR && c == sC) || time >= INF) {
+			if ((r == sR && c == sC) || time >= INF || !flag) {
 				time = -1;
 				break;
 			}
