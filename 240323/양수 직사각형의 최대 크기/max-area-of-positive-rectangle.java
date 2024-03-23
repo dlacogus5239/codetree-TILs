@@ -1,7 +1,5 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -32,7 +30,7 @@ public class Main {
 			for (int w = 1; w <= M; w++) { // 직사각형 너비
 
 				for (int i = 0; i <= N - h; i++) { // 처음좌표부터 탐색 시작
-					for (int j = 0; j <= N - w; j++) {
+					for (int j = 0; j <= M - w; j++) {
 						if (isPositive(h, w, i, j)) {
 							answer = Math.max(answer, h * w);
 						}
