@@ -33,63 +33,57 @@ public class Main {
 	public static void Move() {
 		int time = 0;
 		boolean flag = true;
-		loop: while (true) {
-//			System.out.println("[" + r + ", " + c + "]");
-
+		loop: while (time < INF) {
 			int nr = r + dr[dir];
 			int nc = c + dc[dir];
-			if (!isIn(nr, nc)) {// 탈출
-				time++;
-				break;
-			}
 
-			if (map[nr][nc] == '#') { // 벽인 경우
-				int change = 1;
-				for (change = 1; change <= 3; change++) {
-					dir = (dir + 1) % 4;
+			if (!isIn(nr, nc)) {
+				time++;
+				break loop;
+			}
+			if (map[nr][nc] == '#') {
+				int change = 0;
+				for (change = 0; change < 4; change++) {
+					dir = (dir + 3) % 4;
 					nr = r + dr[dir];
 					nc = c + dc[dir];
+
 					if (!isIn(nr, nc)) {
 						time++;
 						break loop;
-					} else if (map[nr][nc] == '#') {
-						continue;
-					} else if (map[nr][nc] == '.') {
+					}
+					if (map[nr][nc] == '.') {
 						break;
 					}
 				}
 
-				if (change == 4) {
+				if (change == 3) {
 					time = -1;
 					break loop;
 				}
-				continue;
-			} else if (map[nr][nc] == '.') { // 빈공간인경우
-				// 오른쪽 검사
-				int tmpR = nr + dr[(dir + 1) % 4];
-				int tmpC = nc + dc[(dir + 1) % 4];
+			}
+			if (map[nr][nc] == '.') {
+				r = nr;
+				c = nc;
+				time++;
 
-				if (map[tmpR][tmpC] == '#') {// 오른쪽에 벽이 있으면
-					// 이동
-					r = nr;
-					c = nc;
+				int tmpR = r + dr[(dir + 1) % 4];
+				int tmpC = c + dc[(dir + 1) % 4];
+
+				if (map[tmpR][tmpC] == '#') {
+					continue;
+				} else {
+					dir = (dir + 1) % 4;
+					r = tmpR;
+					c = tmpC;
 					time++;
-				} else { // 벽이 없는 경우
-					dir = (dir + 1) % 4; // 방향 바꿔주고
-					r = nr + dr[dir]; // 앞에 이동한거 더해서
-					c = nc + dc[dir]; // 이동 한번 더
-
-					time += 2;
 				}
 			}
 
-			if ((r == sR && c == sC) || time >= INF || !flag) {
-				time = -1;
-				break;
-			}
-
 		}
-
+		if (time >= INF) {
+			time = -1;
+		}
 		System.out.println(time);
 
 	}
