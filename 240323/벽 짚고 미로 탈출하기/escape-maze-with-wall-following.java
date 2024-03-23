@@ -49,14 +49,17 @@ public class Main {
 					dir = (dir + 1) % 4;
 					nr = r + dr[dir];
 					nc = c + dc[dir];
-					if (!isIn(nr, nc) || map[nr][nc] == '#') {
+					if (!isIn(nr, nc)) {
+						time++;
+						break loop;
+					} else if (map[nr][nc] == '#') {
 						continue;
 					} else if (map[nr][nc] == '.') {
 						break;
 					}
 				}
 
-				if (change == 3) {
+				if (change == 4) {
 					time = -1;
 					break loop;
 				}
