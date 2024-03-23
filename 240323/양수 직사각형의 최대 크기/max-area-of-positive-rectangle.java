@@ -46,7 +46,7 @@ public class Main {
 		boolean flag = true;
 		Check: for (int i = r; i < r + h; i++) {
 			for (int j = c; j < c + w; j++) {
-				if (map[i][j] < 0) {
+				if (map[i][j] <= 0) {
 					flag = false;
 					break Check;
 				}
