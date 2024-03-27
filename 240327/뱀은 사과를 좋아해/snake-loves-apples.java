@@ -52,6 +52,8 @@ public class Main {
 			appleMap[r][c] = 1;
 
 		}
+//		System.out.println("===APPLE MAP===");
+//		PrintMap(appleMap);
 		int result = 0;
 		// move Start
 		MOVE: for (int time = 1; time <= K; time++) {
@@ -71,10 +73,10 @@ public class Main {
 				if (!isIn(nr, nc)) {
 					break MOVE;
 				}
-				// 몸통에 부딪힐 경우 BREAK
-				if (snakeMap[nr][nc] == 1) {
-					break MOVE;
-				}
+//				// 몸통에 부딪힐 경우 BREAK
+//				if (snakeMap[nr][nc] == 1) {
+//					break MOVE;
+//				}
 				boolean isApple = false;
 				// 사과가 있을 경우
 				if (appleMap[nr][nc] == 1) {
@@ -102,7 +104,9 @@ public class Main {
 
 				for (int i = 0; i < snake.size(); i++) {
 					Node tmp = snake.get(i);
-
+					if (snakeMap[tmp.r][tmp.c] != 0) {
+						break MOVE;
+					}
 					snakeMap[tmp.r][tmp.c] = 1;
 				}
 
