@@ -62,13 +62,13 @@ public class Main {
 
 		Arrays.fill(isChoosen, false);
 
-		chooseLadder(0);
+		chooseLadder(1);
 		System.out.println(answer);
 
 	}
 
 	public static void chooseLadder(int cnt) {
-		if (cnt == M) {
+		if (cnt == M + 1) {
 			int[] tmpResult = Simulate();
 			int tmp = 0;
 			for (int i = 0; i < tmpResult.length; i++) {
@@ -117,6 +117,7 @@ public class Main {
 //		for (int i = 1; i < tmpPerson.length; i++) {
 //			System.out.print(tmpPerson[i] + " ");
 //		}
+//		System.out.println();
 
 //		System.out.println();
 
