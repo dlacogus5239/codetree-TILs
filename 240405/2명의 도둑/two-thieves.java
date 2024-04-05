@@ -1,8 +1,6 @@
-package codeTreeSamsung;
-
 import java.util.Scanner;
 
-public class Main38 {
+public class Main {
 	public static final int MAX_M = 5;
 	public static final int MAX_N = 10;
 
