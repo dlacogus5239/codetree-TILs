@@ -48,6 +48,8 @@ public class Main {
 	public static void Comb(int start, int cnt) {
 		if (cnt == M) {
 			int tmp = Integer.MAX_VALUE;
+//			System.out.println(Arrays.toString(isChoosen));
+
 			for (int i = 0; i < N; i++) {
 				if (isChoosen[i]) {
 					Node a = nodes.get(i);
@@ -61,6 +63,7 @@ public class Main {
 					}
 				}
 			}
+//			System.out.println(tmp);
 			min = Math.min(tmp, min);
 			return;
 		}
