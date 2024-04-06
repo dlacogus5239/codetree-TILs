@@ -9,7 +9,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		N = Integer.parseInt(br.readLine());
-		int[][] nums = new int[N][N];
+		int[][] nums = new int[4][N];
 		StringTokenizer st;
 		for (int i = 0; i < 4; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -32,11 +32,13 @@ public class Main {
 				freq2.put(tmp2, freq2.getOrDefault(tmp2, 0) + 1);
 			}
 		}
+//		System.out.println(freq1.toString());
+//		System.out.println(freq2.toString());
 		int answer = 0;
 		for (int i : freq1.keySet()) {
 			int diff = 0 - i;
 			if (freq2.containsKey(diff)) {
-				answer += freq2.get(diff);
+				answer += freq2.get(diff) * freq1.get(i);
 			}
 		}
 		System.out.println(answer);
