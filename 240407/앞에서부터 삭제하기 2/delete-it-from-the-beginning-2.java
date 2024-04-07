@@ -16,19 +16,24 @@ public class Main {
 		for (int i = 0; i < N; i++) {
 			arr[i] = Integer.parseInt(st.nextToken());
 		}
+		// 최소 N - 1부터 시작
+		int k = N - 1;
+		int sum = 0;
+		for (int i = N - 2; i < N; i++) {
+			pq.offer(arr[i]);
+			sum += arr[i];
+		} // DONE
 
-		for (int k = 1; k <= N - 2; k++) {
-			for (int i = k; i < N; i++) {
-				pq.offer(arr[i]);
-			}
-
+		while (k-- > 1) {
+//			System.out.println(k);
 //			System.out.println(pq.toString());
-			pq.poll();
-			int sum = 0;
-			while (!pq.isEmpty()) {
-				sum += pq.poll();
-			}
+			int tmp = pq.poll();
+			sum -= tmp;
+
 			average = Math.max(average, sum / (N - k - 1));
+			pq.offer(tmp);
+			pq.offer(arr[k - 1]);
+			sum += tmp + arr[k - 1];
 		}
 
 		System.out.printf("%.2f", average);
