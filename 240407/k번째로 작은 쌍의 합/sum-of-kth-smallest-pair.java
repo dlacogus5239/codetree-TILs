@@ -62,7 +62,7 @@ public class Main {
 		// 만약 최솟값으로 꺼낸 값이 A(i) + B(j) 였다면, 이를 빼주고 A(i) + B(j + 1)을 새로 넣어주면
 		// 최솟값 후보들 갱신
 		// 2-3번째줄 K번 반복
-		for (int i = 0; i < M; i++) {
+		for (int i = 0; i < N; i++) {
 			pq.offer(new Pair(arr1[i] + arr2[0], 0, i));
 		}
 
