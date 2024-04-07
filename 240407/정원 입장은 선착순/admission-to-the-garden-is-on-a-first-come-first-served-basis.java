@@ -48,13 +48,10 @@ public class Main {
 		// 처음 사람 처리완료
 
 		while (!pq.isEmpty()) {
-//			System.out.println(nextTime);
 			cur = pq.peek();
-//			System.out.println("cur" + cur.toString());
 			// 도착시간이 지금 정원에 있는 사람이 나오기 전이면 waiting에 추가
 			if (nextTime > cur.arrive) {
 				waiting.offer(pq.poll());
-//				System.out.println("Wait : " + waiting.toString());
 				continue;
 			} else { // 다 도착처리 이후
 				// 기다리는 사람 처리
@@ -68,6 +65,12 @@ public class Main {
 					pq.poll();
 				}
 			}
+		}
+
+		if (!waiting.isEmpty()) {
+			Person enter = waiting.poll();
+			result.offer(nextTime - enter.arrive);
+			nextTime += enter.time;
 		}
 
 		System.out.println(result.poll());
