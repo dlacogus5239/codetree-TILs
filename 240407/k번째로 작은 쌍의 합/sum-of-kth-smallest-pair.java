@@ -63,7 +63,7 @@ public class Main {
 		// 최솟값 후보들 갱신
 		// 2-3번째줄 K번 반복
 		for (int i = 0; i < N; i++) {
-			pq.offer(new Pair(arr1[i] + arr2[0], 0, i));
+			pq.offer(new Pair(arr1[i] + arr2[0], i, 0));
 		}
 
 		// K번 반복
