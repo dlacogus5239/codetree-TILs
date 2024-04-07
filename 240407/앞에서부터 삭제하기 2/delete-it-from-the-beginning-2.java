@@ -30,7 +30,7 @@ public class Main {
 			int tmp = pq.poll();
 			sum -= tmp;
 
-			average = Math.max(average, sum / (N - k - 1));
+			average = Math.max(average, (double) sum / (N - k - 1));
 			pq.offer(tmp);
 			pq.offer(arr[k - 1]);
 			sum += tmp + arr[k - 1];
