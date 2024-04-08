@@ -31,9 +31,9 @@ public class Main {
 		}
 //		System.out.println(Arrays.toString(minCost));
 //		System.out.println(Arrays.toString(moveCost));
-		int answer = 0;
+		long answer = 0;
 		for (int i = 0; i < N - 1; i++) {
-			answer += minCost[i] * moveCost[i];
+			answer += (long) minCost[i] * moveCost[i];
 		}
 
 		System.out.println(answer);
