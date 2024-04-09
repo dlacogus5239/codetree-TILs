@@ -145,7 +145,8 @@ public class Main {
 		if (s.pre == null && e.next == null) {
 			heads.put(lineNumN, null);
 			tails.put(lineNumN, null);
-
+			connect(target.pre, s);
+			connect(e, target);
 		}
 		// s가 head일 경우
 		else if (s.pre == null) {
@@ -167,7 +168,6 @@ public class Main {
 			s.pre = null;
 			connect(e, target);
 		}
-
 		// 아닐경우
 		else {
 			connect(s.pre, e.next);
@@ -182,7 +182,6 @@ public class Main {
 
 	public static void refreshLine(int lineNum) {
 		Node cur = heads.get(lineNum);
-
 		while (cur != null) {
 			line[dict.get(cur.name)] = lineNum;
 			cur = cur.next;
