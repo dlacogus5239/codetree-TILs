@@ -64,7 +64,6 @@ public class Main {
 				q.offer(map[cur[0]][cur[1]]);
 			}
 		}
-		System.out.println(q.toString());
 		int tmp = q.pollLast();
 		cur[0] = r;
 		cur[1] = c;
