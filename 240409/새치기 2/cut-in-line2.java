@@ -171,13 +171,12 @@ public class Main {
 		// 아닐경우
 		else {
 			connect(s.pre, e.next);
-
 			connect(target.pre, s);
 			connect(target, e);
 		}
 
-		refreshLine(lineNum);
-		refreshLine(lineNumN);
+//		refreshLine(lineNum);
+//		refreshLine(lineNumN);
 	}
 
 	public static void refreshLine(int lineNum) {
