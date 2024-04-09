@@ -22,6 +22,10 @@ public class Main {
 		int changeDir = 0;
 		int cnt = 1;
 		map[r][c] = cnt++;
+		if (N == 1) {
+			printMap();
+			return;
+		}
 		r += dr[d];
 		c += dc[d];
 		map[r][c] = cnt++;
