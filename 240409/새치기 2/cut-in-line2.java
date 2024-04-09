@@ -61,9 +61,9 @@ public class Main {
 				cur.pre = null;
 				heads.put(cnt, cur);
 			} else if (i % lineCnt == 0) {
-				cnt++;
+
 				cur.next = null;
-				tails.put(cnt, cur);
+				tails.put(cnt++, cur);
 			}
 		} // 줄 나눔
 
@@ -94,6 +94,7 @@ public class Main {
 		}
 //		System.out.println(Arrays.toString(line));
 //		System.out.println(heads.toString());
+//		System.out.println(tails.toString());
 //		System.out.println(dict.toString());
 		PrintLine();
 
@@ -140,27 +141,43 @@ public class Main {
 	public static void insertNodesPre(Node s, Node e, Node target) {
 		int lineNum = line[dict.get(target.name)];
 		int lineNumN = line[dict.get(s.name)];
-		// e 이 tail일 경우
-		if (e.next == null) {
-			tails.put(lineNumN, s.pre);
-			s.pre.next = null;
-		} else {
-			connect(s.pre, e.next);
-		}
+		// s-e가 라인 전체일 경우
+		if (s.pre == null && e.next == null) {
+			heads.put(lineNumN, null);
+			tails.put(lineNumN, null);
 
+		}
 		// s가 head일 경우
-		if (s.pre == null) {
-			heads.put(lineNumN, s.pre);
-			s.pre.pre = null;
-		}
-
-		if (target.pre == null) {
-			heads.put(lineNum, s);
-			connect(e, target);
-		} else {
+		else if (s.pre == null) {
+			heads.put(lineNumN, e.next);
+			heads.get(lineNumN).pre = null;
 			connect(target.pre, s);
 			connect(e, target);
 		}
+		// e가 tail일 경우
+		else if (e.next == null) {
+			tails.put(lineNumN, s.pre);
+			tails.get(lineNumN).next = null;
+			connect(target.pre, s);
+			connect(e, target);
+		}
+		// target이 head일 경우
+		else if (target.pre == null) {
+			heads.put(lineNum, s);
+			s.pre = null;
+			connect(e, target);
+		}
+
+		// 아닐경우
+		else {
+			connect(s.pre, e.next);
+
+			connect(target.pre, s);
+			connect(target, e);
+		}
+
+		refreshLine(lineNum);
+		refreshLine(lineNumN);
 	}
 
 	public static void refreshLine(int lineNum) {
@@ -182,11 +199,11 @@ public class Main {
 				sb.append("-1").append("\n");
 				continue;
 			}
-			while (cur.next != null) {
+			while (cur != null) {
 				sb.append(cur.name + " ");
 				cur = cur.next;
 			}
-			sb.append(cur.name).append("\n");
+			sb.append("\n");
 		}
 
 		System.out.println(sb.toString());
