@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -20,9 +21,12 @@ public class Main {
 		M = Integer.parseInt(st.nextToken());
 		map = new int[N][M];
 
-		int cnt = 1;
+		for (int i = 0; i < N; i++) {
+			Arrays.fill(map[i], -1);
+		}
+		int cnt = 0;
 		map[r][c] = cnt++;
-		while (cnt <= N * M) {
+		while (cnt < N * M) {
 			int nr = r + dr[d];
 			int nc = c + dc[d];
 			if (!isIn(nr, nc)) {
@@ -30,7 +34,7 @@ public class Main {
 				continue;
 			}
 
-			if (map[nr][nc] != 0) {
+			if (map[nr][nc] != -1) {
 				d = (d + 1) % 4;
 				continue;
 			}
@@ -45,7 +49,7 @@ public class Main {
 	public static void printMap() {
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
-				char tmp = (char) (map[i][j] % 26 + 'A' - 1);
+				char tmp = (char) (map[i][j] % 26 + 'A');
 				System.out.print(tmp + " ");
 			}
 
