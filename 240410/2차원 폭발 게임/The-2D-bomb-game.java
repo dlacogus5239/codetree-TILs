@@ -62,6 +62,7 @@ public class Main {
 			for (int r = 0; r < N - 1; r++) {
 				if (map[r][c] == 0) {
 					cnt = 1;
+					flag = false;
 					continue;
 				}
 				if (map[r][c] == map[r + 1][c]) {
@@ -81,8 +82,13 @@ public class Main {
 				}
 			}
 			if (cnt >= M) {
+
 				flag = true;
 				for (int i = N - 1; i > N - 1 - cnt; i--) {
+					if (map[i][c] == 0) {
+						flag = false;
+						break;
+					}
 					map[i][c] = 0;
 				}
 			} else {
