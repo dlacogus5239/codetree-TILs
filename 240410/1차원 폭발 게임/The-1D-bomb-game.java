@@ -1,107 +1,85 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int[] col;
 	static int N, M;
+	static int[] col;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
-		col = new int[N + 1];
+		col = new int[N];
 		for (int i = 0; i < N; i++) {
 			col[i] = Integer.parseInt(br.readLine());
 		}
-		col[N] = -1;
-
-		boolean tmp;
-		do {
-			tmp = Bomb();
-//			System.out.print(tmp + " ");
-		} while (tmp);
+		Bomb();
 		int cnt = 0;
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < N; i++) {
+		for (int i = N - 1; i > 0; i--) {
 			if (col[i] != 0) {
 				cnt++;
 				sb.append(col[i]).append("\n");
 			}
-
 		}
 		System.out.println(cnt);
 		System.out.println(sb.toString());
-
 	}
 
-	public static boolean Bomb() {
-		boolean flag = false;
-		int[] next = new int[N + 1];
-		next[N] = -1;
-		for (int i = 0; i < N; i++) {
-			if (col[i] == 0) {
-				continue;
-			} else if (col[i] != col[i + 1]) {
-				int startIdx = i;
-				for (int j = i; j >= 0; j--) {
-					if (col[j] != col[i]) {
-						startIdx = j + 1;
-						break;
-					}
+	public static void Bomb() {
+		boolean didExplode;
+		Stack<Integer> s;
+		do {
+			s = new Stack<>();
+			didExplode = false;
+			for (int i = 0; i < N; i++) {
+				if (col[i] == 0) {
+					continue;
 				}
-				if (i - startIdx + 1 >= M) {
-					for (int j = startIdx; j <= i; j++) {
-						next[i] = 0;
+
+				int endIdx = getEndIdx(i, col[i]);
+				if (endIdx - i + 1 >= M) {
+					for (int j = i; j <= endIdx; j++) {
+						col[j] = 0;
 					}
-					flag = true;
+					didExplode = true;
+				}
+			}
+			for (int i = 0; i < N; i++) {
+				if (col[i] != 0) {
+					s.add(col[i]);
+				}
+			}
+			int[] tmp = new int[N];
+			for (int i = N - 1; i >= 0; i--) {
+				if (!s.isEmpty()) {
+					tmp[i] = s.pop();
 				} else {
-					for (int j = startIdx; j <= i; j++) {
-						next[i] = col[i];
-					}
+					tmp[i] = 0;
 				}
 			}
-		}
 
-//		PrintCol(next);
-		Gravity(next);
-		return flag;
+			for (int i = 0; i < N; i++) {
+				col[i] = tmp[i];
+			}
+
+		} while (didExplode);
 	}
 
-	public static void Gravity(int[] next) {
-		Stack<Integer> s = new Stack<>();
-
-		for (int i = 0; i < N; i++) {
-			if (next[i] != 0) {
-				s.add(next[i]);
-			}
-		}
-
-		for (int i = N - 1; i >= 0; i--) {
-			if (!s.isEmpty()) {
-				next[i] = s.pop();
+	public static int getEndIdx(int startIdx, int curNum) {
+		int endIdx = startIdx + 1;
+		while (endIdx < N) {
+			if (col[endIdx] == curNum) {
+				endIdx++;
 			} else {
-				next[i] = 0;
+				break;
 			}
 		}
-		copyCol(next);
-	}
-
-	public static void copyCol(int[] next) {
-		for (int i = 0; i < N; i++) {
-			col[i] = next[i];
-		}
-		col[N] = -1;
-	}
-
-	public static void PrintCol(int[] col) {
-		for (int i = 0; i < N; i++) {
-			System.out.print(col[i] + " ");
-		}
-		System.out.println();
+		return endIdx - 1;
 	}
 
 }
