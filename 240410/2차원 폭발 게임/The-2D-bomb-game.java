@@ -24,23 +24,14 @@ public class Main {
 		}
 
 		for (int i = 0; i < K; i++) {
-			while (true) {
-				boolean tmp = Bomb();
-				if (!tmp) {
-					break;
-				}
+			while (Bomb()) {
+				continue;
 			}
 			Rotate();
 			Gravity();
 		}
-		Rotate();
-		Gravity();
-		while (true) {
-			boolean tmp = Bomb();
-			if (!tmp) {
-				break;
-			}
-
+		while (Bomb()) {
+			continue;
 		}
 
 		int answer = 0;
