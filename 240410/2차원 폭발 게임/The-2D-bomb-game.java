@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Main80 {
+public class Main {
 	public static final int WILL_EXPLODE = 0;
 	public static final int BLANK = -1;
 	public static final int MAX_NUM = 100;
