@@ -106,9 +106,9 @@ public class Main {
 						if (s.peek() == next[r][c]) {
 							next[r][c] += s.pop();
 						}
-					} else {
-						next[r][c] = 0;
 					}
+				} else {
+					next[r][c] = 0;
 				}
 			}
 
@@ -133,9 +133,9 @@ public class Main {
 						if (s.peek() == next[r][c]) {
 							next[r][c] += s.pop();
 						}
-					} else {
-						next[r][c] = 0;
 					}
+				} else {
+					next[r][c] = 0;
 				}
 			}
 
