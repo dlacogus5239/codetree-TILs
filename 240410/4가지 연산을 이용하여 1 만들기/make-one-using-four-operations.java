@@ -7,6 +7,7 @@ import java.util.Queue;
 public class Main {
 	static int N;
 	static int result = Integer.MAX_VALUE;
+	static boolean[] isVisited = new boolean[1_000_003];
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -25,6 +26,9 @@ public class Main {
 				result = Math.min(result, cur[1]);
 				break;
 			}
+			if (cur[1] + 1 >= N - 1) {
+				break;
+			}
 
 			if (cur[0] % 2 == 0) {
 				q.offer(new int[] { cur[0] / 2, cur[1] + 1 });
@@ -35,7 +39,9 @@ public class Main {
 			if (cur[0] - 1 >= 1) {
 				q.offer(new int[] { cur[0] - 1, cur[1] + 1 });
 			}
-			q.offer(new int[] { cur[0] + 1, cur[1] + 1 });
+			if (cur[0] + 1 <= 1_000_002) {
+				q.offer(new int[] { cur[0] + 1, cur[1] + 1 });
+			}
 		}
 	}
 
