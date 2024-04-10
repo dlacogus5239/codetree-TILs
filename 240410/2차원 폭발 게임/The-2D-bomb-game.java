@@ -24,12 +24,25 @@ public class Main {
 		}
 
 		for (int i = 0; i < K; i++) {
-			Bomb();
-			Gravity();
+			while (true) {
+				boolean tmp = Bomb();
+				if (!tmp) {
+					break;
+				}
+			}
 			Rotate();
 			Gravity();
 		}
-		Bomb();
+		Rotate();
+		Gravity();
+		while (true) {
+			boolean tmp = Bomb();
+			if (!tmp) {
+				break;
+			}
+
+		}
+
 		int answer = 0;
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
@@ -39,13 +52,18 @@ public class Main {
 			}
 		}
 		System.out.println(answer);
-//		PrintMap();
 	}
 
-	public static void Bomb() {
+	public static boolean Bomb() {
+		boolean flag = false;
+
 		for (int c = 0; c < N; c++) {
 			int cnt = 1;
 			for (int r = 0; r < N - 1; r++) {
+				if (map[r][c] == 0) {
+					cnt = 1;
+					continue;
+				}
 				if (map[r][c] == map[r + 1][c]) {
 					cnt++;
 					continue;
@@ -55,17 +73,26 @@ public class Main {
 						for (int i = r; i > r - cnt; i--) {
 							map[i][c] = 0;
 						}
+						flag = true;
+					} else {
+						flag = false;
 					}
 					cnt = 1;
 				}
 			}
 			if (cnt >= M) {
+				flag = true;
 				for (int i = N - 1; i > N - 1 - cnt; i--) {
 					map[i][c] = 0;
 				}
+			} else {
+				flag = false;
 			}
 
 		}
+		Gravity();
+
+		return flag;
 
 	}
 
