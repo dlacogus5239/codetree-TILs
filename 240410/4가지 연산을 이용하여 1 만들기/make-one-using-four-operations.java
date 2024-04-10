@@ -5,44 +5,44 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Main {
-	static int N;
-	static int result = Integer.MAX_VALUE;
-	static boolean[] isVisited = new boolean[1_000_003];
+	public static int MAX_N = 1000000;
+	public static int N; // 숫자
+	public static int[] graph = new int[MAX_N + 1];
+	public static int[] step = new int[MAX_N + 1];
+	public static boolean[] visited = new boolean[MAX_N + 1];
+	public static Queue<Integer> bfsQ = new LinkedList<>();
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		N = Integer.parseInt(br.readLine());
-		BFS();
-		System.out.println(result);
-	}
 
-	public static void BFS() {
-		Queue<int[]> q = new LinkedList<>();
+		for (int i = 0; i <= N; i++) {
+			graph[i] = i;
+		}
 
-		q.offer(new int[] { N, 0 });
-		while (!q.isEmpty()) {
-			int[] cur = q.poll();
-			if (cur[0] == 1) {
-				result = Math.min(result, cur[1]);
-				break;
-			}
-			if (cur[1] + 1 >= N - 1) {
-				break;
-			}
+		visited[graph[1]] = true;
+		bfsQ.add(graph[1]);
 
-			if (cur[0] % 2 == 0) {
-				q.offer(new int[] { cur[0] / 2, cur[1] + 1 });
-			}
-			if (cur[0] % 3 == 0) {
-				q.offer(new int[] { cur[0] / 3, cur[1] + 1 });
-			}
-			if (cur[0] - 1 >= 1) {
-				q.offer(new int[] { cur[0] - 1, cur[1] + 1 });
-			}
-			if (cur[0] + 1 <= 1_000_002) {
-				q.offer(new int[] { cur[0] + 1, cur[1] + 1 });
+		while (!bfsQ.isEmpty()) {
+			int curr = bfsQ.poll();
+			int[] operation = { -1, 1, curr, curr * 2 };
+			for (int i = 0; i < 4; i++) {
+				int nx = curr + operation[i];
+				if (canGo(nx)) {
+					visited[nx] = true;
+					step[nx] = step[curr] + 1;
+					bfsQ.add(nx);
+				}
 			}
 		}
+		System.out.println(step[N]);
 	}
 
+	private static boolean canGo(int nx) {
+		return isInRange(nx) && !visited[nx];
+	}
+
+	private static boolean isInRange(int nx) {
+		return nx >= 0 && nx <= MAX_N;
+	}
 }
