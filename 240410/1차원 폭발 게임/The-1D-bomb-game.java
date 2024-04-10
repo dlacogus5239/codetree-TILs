@@ -20,7 +20,7 @@ public class Main {
 		Bomb();
 		int cnt = 0;
 		StringBuilder sb = new StringBuilder();
-		for (int i = N - 1; i > 0; i--) {
+		for (int i = 0; i < N; i++) {
 			if (col[i] != 0) {
 				cnt++;
 				sb.append(col[i]).append("\n");
