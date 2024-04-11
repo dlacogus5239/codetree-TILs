@@ -9,7 +9,6 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
-
 	static class Cannon {
 		int num;
 		int r, c;
@@ -53,7 +52,7 @@ public class Main {
 	static int[][] backR, backC;
 
 	// 현재 턴 저장용
-	static int turn;
+	static int turn = 0;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -82,10 +81,9 @@ public class Main {
 				}
 
 				// 열 값이 가장 큰
-				else if (o1.c != o2.c) {
-					return o2.c - o1.c;
-				}
-				return 0;
+
+				return o2.c - o1.c;
+
 			}
 
 		});
@@ -105,11 +103,10 @@ public class Main {
 				// r + c값이 가장 작은
 				else if ((o1.r + o1.c) != (o2.r + o2.c)) {
 					return (o1.r + o1.c) - (o2.r + o2.c);
-				} else if (o1.c != o2.c) {
-					// 열 값이 가장 작은
-					return o1.c - o2.c;
 				}
-				return 0;
+				// 열 값이 가장 작은
+				return o1.c - o2.c;
+
 			}
 
 		});
@@ -144,10 +141,11 @@ public class Main {
 		if (cannons.size() == 1) {
 			curToAttack.attack -= N + M;
 		}
-		if (turn == 1) {
-			System.out.println(cannons.get(0).attack);
-			return;
-		}
+//		if (turn == 1) {
+//			System.out.println(cannons.get(0).attack);
+//			return;
+//		}
+//		
 		System.out.println(curToAttack.attack);
 
 	}
@@ -188,7 +186,6 @@ public class Main {
 		// 레이저 공격이 가능한 경우
 		if (canAttack) {
 			curToAttack.attack -= curAttack.attack;
-
 			if (curToAttack.attack < 0) {
 				map[curToAttack.r][curToAttack.c] = 0;
 				curToAttack.attack = 0;
@@ -302,6 +299,8 @@ public class Main {
 		curAttack.lastTurn = turn;
 
 		curToAttack.isAttacked = true;
+//		System.out.println("ATTACK : " + curAttack.toString());
+//		System.out.println("TO : " + curToAttack.toString());
 
 	}
 
