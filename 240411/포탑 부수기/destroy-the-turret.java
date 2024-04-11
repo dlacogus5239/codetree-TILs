@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -119,20 +120,34 @@ public class Main {
 				int tmp = Integer.parseInt(st.nextToken());
 
 				if (tmp != 0) {
-					cannons.add(new Cannon(cnt, i, j, tmp, -1, false));
+					cannons.add(new Cannon(cnt, i, j, tmp, 0, false));
 					map[i][j] = cnt++;
 				} else {
-					map[i][j] = tmp;
+					map[i][j] = 0;
 				}
 			}
 		}
+		backR = new int[N][M];
+		backC = new int[N][M];
 		for (int t = 1; t <= K; t++) {
 			turn = t;
+			if (cannons.size() == 1) {
+				break;
+			}
+//			printCannon();
 			setAttackerAndTo();
 			Laser();
-
 		}
+
 		setAttackerAndTo();
+
+		if (cannons.size() == 1) {
+			curToAttack.attack -= N + M;
+		}
+		if (turn == 1) {
+			System.out.println(cannons.get(0).attack);
+			return;
+		}
 		System.out.println(curToAttack.attack);
 
 	}
@@ -143,8 +158,11 @@ public class Main {
 		boolean canAttack = false;
 		boolean[][] isVisited = new boolean[N][M];
 		isVisited[curAttack.r][curAttack.c] = true;
-		backR = new int[N][M];
-		backC = new int[N][M];
+		for (int i = 0; i < N; i++) {
+			Arrays.fill(backR[i], 0);
+			Arrays.fill(backC[i], 0);
+		}
+
 		while (!q.isEmpty()) {
 			int[] cur = q.poll();
 			if (cur[0] == curToAttack.r && cur[1] == curToAttack.c) {
@@ -167,14 +185,14 @@ public class Main {
 			}
 		}
 
+		// 레이저 공격이 가능한 경우
 		if (canAttack) {
 			curToAttack.attack -= curAttack.attack;
-			curToAttack.lastTurn = turn;
 
 			if (curToAttack.attack < 0) {
 				map[curToAttack.r][curToAttack.c] = 0;
+				curToAttack.attack = 0;
 				curToAttack.isAttacked = true;
-
 			}
 			int br = backR[curToAttack.r][curToAttack.c];
 			int bc = backC[curToAttack.r][curToAttack.c];
@@ -198,29 +216,25 @@ public class Main {
 							cur.attack = 0;
 						}
 						cur.isAttacked = true;
-						cur.lastTurn = turn;
 					}
 
 				}
 			}
 
 		} else {
+			// 아니면 포탑 공격
 			Throw();
 		}
 
 		// 하고 다시 맵에 기록
-
 		RefreshCannon();
-//		printCannon();
-//		printMap(map);
 	}
 
 	public static void RefreshCannon() {
-		map = new int[N][M];
-
 		for (int i = 0; i < cannons.size(); i++) {
 			Cannon cur = cannons.get(i);
 			if (cur.attack == 0) {
+				map[cur.r][cur.c] = 0;
 				cannons.remove(i);
 				i--;
 			} else {
@@ -228,27 +242,28 @@ public class Main {
 					cur.attack += 1;
 				}
 				cur.isAttacked = false;
-				map[cur.r][cur.c] = cur.num;
 			}
 		}
 	}
 
 	public static void Throw() {
-		System.out.println("THROW");
 		curToAttack.attack -= curAttack.attack;
-		curToAttack.lastTurn = turn;
 		if (curToAttack.attack < 0) {
 			curToAttack.attack = 0;
 		}
 
 		ArrayList<Integer> wayAttack = new ArrayList<>();
 		for (int d = 0; d < 8; d++) {
-			int nr = (curToAttack.r + N + dr[d]) % N;
-			int nc = (curToAttack.c + M + dc[d]) % M;
+			int nr = (curToAttack.r + N + throwDr[d]) % N;
+			int nc = (curToAttack.c + M + throwDc[d]) % M;
 			if (map[nr][nc] != 0) {
+				if (map[nr][nc] == curAttack.num) {
+					continue;
+				}
 				wayAttack.add(map[nr][nc]);
 			}
 		}
+//		System.out.println("THROW Attack : " + wayAttack.toString());
 		for (int i = 0; i < wayAttack.size(); i++) {
 			Cannon cur;
 			for (int j = 0; j < cannons.size(); j++) {
@@ -260,7 +275,6 @@ public class Main {
 						cur.attack = 0;
 					}
 					cur.isAttacked = true;
-					cur.lastTurn = turn;
 				}
 
 			}
@@ -280,21 +294,21 @@ public class Main {
 			doAttack.offer(cannons.get(i));
 
 		}
+		// 선정 완료
 		curAttack = doAttack.poll();
+		curToAttack = toAttack.poll();
 		curAttack.attack = curAttack.attack + N + M;
 		curAttack.isAttacked = true;
-		curToAttack = toAttack.poll();
+		curAttack.lastTurn = turn;
+
 		curToAttack.isAttacked = true;
-		// 선정 완료
-//		System.out.println(curAttack.toString());
-//		System.out.println(curToAttack.toString());
+
 	}
 
 	public static void printCannon() {
 		for (int i = 0; i < cannons.size(); i++) {
 			System.out.println(cannons.get(i).toString());
 		}
-
 	}
 
 	public static void printMap(int[][] map) {
